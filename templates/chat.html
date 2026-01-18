@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Support — Чат поддержки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="chat-container">
+        <header class="chat-header">
+            <a href="/" class="back-btn"><i data-lucide="chevron-left"></i></a>
+            <div class="bot-info">
+                <div class="avatar">AI</div>
+                <div>
+                    <div class="name">Поддержка Постаматов</div>
+                    <div class="status">В сети</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="message bot">
+                Привет! Я ваш ИИ-помощник. Чем могу помочь с вашим заказом или работой терминала?
+            </div>
+        </div>
+
+        <form class="input-area" id="chatForm">
+            <input type="text" id="userInput" placeholder="Введите сообщение..." autocomplete="off">
+            <button type="submit" id="sendBtn">
+                <i data-lucide="send"></i>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const chatWindow = document.getElementById('chatWindow');
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            
+            if (text !== "") {
+                // Создаем сообщение пользователя
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user';
+                userMsg.textContent = text;
+                chatWindow.appendChild(userMsg);
+
+                // Очищаем ввод и скроллим вниз
+                userInput.value = "";
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+
+                // Имитация ответа бота (через 1 сек)
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot';
+                    botMsg.textContent = "Ваш запрос принят. Я анализирую проблему...";
+                    chatWindow.appendChild(botMsg);
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
